@@ -1,0 +1,22 @@
+?item.CanActivate()
+  ?loc = rocky
+    ?foe = boss & foe = phase2
+      ?item.GetCooldown(＂blade＂) <= 0
+        equip Blade
+        activate R
+  :
+    ?foe.distance < 30
+      var frame = 0
+      var cdb = 0
+      cdb = item.GetCooldown(＂blade＂)
+      ? cdb <= 0 & frame <= 0
+        frame = 1
+        screen.Next()
+      : ? frame > 0
+        frame++
+        ? frame >= 30
+          frame = 0
+          equip Blade
+          activate R
+          screen.ResetOffset()
+        return
