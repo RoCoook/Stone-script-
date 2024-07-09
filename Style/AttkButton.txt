@@ -1,1 +1,6 @@
-
+var button
+button = ui.AddButton()
+button.x = int
+button.y = int
+button.text = str
+button.SetPressed(func)
