@@ -53,24 +53,4 @@ button.SetPressed(OnPress)
         equipL quest 
 
 
-  ?hp < maxhp & foe.count
-    ?item.GetCooldown(＂mask＂) <= 0 
-      equip mask
-      activate R
-    :
-      ?foe.distance > 15
-        equip vigor crossbow
-      : 
-        equip repeating crossbow
-  
-  ?armor < 12 & time > 2
-    ?item.GetCooldown(＂mind＂) <= 0
-      equipR tower
-      equipL mind
-    :
-      ?foe.distance < 10
-        ?item.GetCooldown(＂Hammer＂) <= 0
-          equip hammer
-          activate R
-        :
-          equip repeating crossbow
+
