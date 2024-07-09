@@ -1,0 +1,57 @@
+?ai.enabled
+  ?foe.count < 8 & foe.count >= 2
+  ^& foe ! boss
+    ?item.GetCooldown(＂bash＂) <= 0 
+      equipR bashing shield 
+      equipL triskelion 
+    :
+      equipR dashing shield 
+      equipL triskelion 
+    ?foe.distance < 12
+      ?foe = ghost 
+        equip ice staff
+      :
+        equip repeating crossbow
+  :
+    ?foe.distance < 20
+      equip repeating crossbow
+    :
+      ?item.GetCooldown(＂quarterstaff＂) <= 0
+      ^&time > 1
+        equip quarter staff *9
+        activate R
+      :
+        equipR compound shield
+        equipL triskelion 
+    
+:  
+  ?time > 2
+    ?armor > 15
+      equipR compound shield 
+      equipL quest
+    :
+      equipR tower shield
+      equipL quest 
+
+
+?hp < maxhp & foe.count
+  ?item.GetCooldown(＂mask＂) <= 0 
+    equip mask
+    activate R
+  :
+    ?foe.distance > 15
+      equip vigor crossbow
+    : 
+      equip repeating crossbow
+  
+?armor < 12 & time > 2
+  ?item.GetCooldown(＂mind＂) <= 0
+    equipR tower
+    equipL mind
+  :
+    ?foe.distance < 10
+      ?item.GetCooldown(＂Hammer＂) <= 0
+        equip hammer
+        activate R
+      :
+        equip repeating crossbow
