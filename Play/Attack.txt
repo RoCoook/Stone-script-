@@ -33,7 +33,10 @@ button.SetPressed(OnPress)
           equip repeating crossbow
     :
       ?foe.distance < 20
-        equip repeating crossbow
+        ?foe = ghost
+          equip ice staff
+         :
+          equip repeating crossbow
       :
         ?item.GetCooldown(＂quarterstaff＂) <= 0
         ^&time > 1
