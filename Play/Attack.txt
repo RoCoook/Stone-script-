@@ -37,7 +37,7 @@ button.SetPressed(OnPress)
       :
         ?item.GetCooldown(＂quarterstaff＂) <= 0
         ^&time > 1
-          equip quarter staff *9
+          equip quarterstaff *10
           activate R
         :
           equipR compound shield
