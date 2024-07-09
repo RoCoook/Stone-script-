@@ -1,0 +1,10 @@
+?loc = rocky 
+  ?harvest=Boulder&harvest.distance < 10
+    equip shovel
+  ?pickup.distance < 5
+    equipR star
+    equipL triskelion 
+:
+  ?pickup.distance < 10
+    equipR star
+    equipL triskelion 
