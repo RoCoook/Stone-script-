@@ -58,7 +58,7 @@ var exc=ascii
 ####################•
 asciiend
 
-func EXE(x,y,c)
+func EXE(3,3,#00FF00)
 
 //  ?has=0
 //    ?time=2
