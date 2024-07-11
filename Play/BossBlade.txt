@@ -1,0 +1,17 @@
+?loc = cave
+  ?item.CanActivate()
+    ?foe = boss
+      var frame = 0
+      var cdb = 0
+      cdb = item.GetCooldown(＂blade＂)
+      ? cdb <= 0 & frame <= 0
+        frame = 1
+        screen.Next()
+      : ? frame > 0
+        frame++
+        ? frame >= 30
+          frame = 0
+          equip Blade
+          activate R
+          screen.ResetOffset()
+        return
