@@ -1,0 +1,20 @@
+?loc = mine
+  ?foe = bomb cart
+    ?foe.distance < 25
+      equip repeating crossbow
+      ?foe.distance < 7
+        equipL mind
+  :
+    ?foe = boss
+      ?ai.enabled
+        equip repeating crossbow
+        ?item.CanActivate()
+          activate potion
+      ?foe.state=32
+        equipL mind
+        equipR tower shield
+      equipR star
+      equipL triskelion 
+    :
+      equipR compound shield
+      equipL quest
