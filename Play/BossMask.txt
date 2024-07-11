@@ -3,7 +3,7 @@
     ?item.CanActivate()
       var zrame = 0
       var zdb = 0
-      zdb = item.GetCooldown(＂blade＂)
+      zdb = item.GetCooldown(＂mask")
       ? zdb <= 0 & zrame <= 0
         zrame = 1
         screen.Next()
@@ -11,7 +11,7 @@
         frame++
         ? zrame >= 30
           zrame = 0
-          equip Blade
+          equip mask
           activate R
           screen.ResetOffset()
         return
