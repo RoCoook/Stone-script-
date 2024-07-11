@@ -1,2 +1,17 @@
 ?loc = caves
   ?foe = boss
+    ?item.CanActivate()
+      var zrame = 0
+      var zdb = 0
+      zdb = item.GetCooldown(＂blade＂)
+      ? zdb <= 0 & zrame <= 0
+        zrame = 1
+        screen.Next()
+      : ? zrame > 0
+        frame++
+        ? zrame >= 30
+          zrame = 0
+          equip Blade
+          activate R
+          screen.ResetOffset()
+        return
