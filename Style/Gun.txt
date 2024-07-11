@@ -1,0 +1,5 @@
+var Gun = ascii
+⌐╦╦═─
+asciiend 
+?item.right = repeating crossbow
+  >h-0,+2,#red,@Gun@
