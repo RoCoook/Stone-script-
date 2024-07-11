@@ -1,3 +1,6 @@
+sys.SetFileUrl(＂https://raw.githubusercontent
+^.com/RoCoook/Stone-script-/main/＂)
+
 import Mechanics/Speed
 import Mechanics/BFGStart
 import Play/Attack
