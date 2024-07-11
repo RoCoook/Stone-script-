@@ -32,12 +32,7 @@ button.SetPressed(OnPress)
         :
           equip repeating crossbow
     :
-      ?foe.distance < 20
-        ?foe = ghost
-          equip ice staff
-        :
-          equip repeating crossbow
-      :
+      ?foe.distance > 20
         ?item.GetCooldown(＂quarterstaff＂) <= 0
         ^&time > 1
           equip quarterstaff *10
@@ -50,7 +45,7 @@ button.SetPressed(OnPress)
     ?time > 2
       ?armor > 15
         equipR compound shield 
-        equipL quest
+        equipL triskelion 
       :
         equipR tower shield
         equipL quest 
