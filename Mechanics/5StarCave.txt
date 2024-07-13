@@ -1,0 +1,52 @@
+?loc = caves
+  ?loc.stars = 5
+    ?foe.distance < 34
+      var frame = 0
+      var cdb = 0
+      cdb = item.GetCooldown(＂blade＂)
+      ? cdb <= 0 & frame <= 0
+        frame = 1
+        screen.Next()
+      : ? frame > 0
+        frame++
+        ? frame >= 19
+          frame = 0
+          equip Blade  // *9 +5 smite
+          activate R
+          screen.ResetOffset()
+        return
+      
+  ?item.GetCooldown(＂blade＂) <= 0
+    activate potion 
+  ?item.GetCooldown(＂quarterstaff＂) <= 0
+  ^&time > 1
+    equip quarterstaff +8 *0 // dashcool
+    activate R
+  ?foe.distance < 13
+    equip heavy hammer *0 +1 // dps
+  :
+    ?item.GetCooldown(＂bash＂) <= 0
+      equiPR bashing shield *8
+      equipL triskelion 
+    :
+      equipR dashing shield *0 +0
+      equipL triskelion 
+  ?pickup.distance < 10
+    equipR star
+    equipL triskelion 
+  ?pickup.distance < 30
+    ?item.CanActivate()
+      var zrame = 0
+      var zdb = 0
+      zdb = item.GetCooldown(＂mask＂)
+      ? zdb <= 0 & zrame <= 0
+        zrame = 1
+        screen.Next()
+      : ? zrame > 0
+        zrame++
+        ? zrame >= 25
+          zrame = 0
+          equip mask *8
+          activate R
+          screen.ResetOffset()
+        return 
