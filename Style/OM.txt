@@ -1,0 +1,45 @@
+
+var OMwlk = 0
+var OM = ［ascii
+#####_
+###_íΩì_
+###/`î´\
+####|¯/
+####`#`
+asciiend
+,ascii
+#####_
+###_íΩì_
+###/`î´\
+####7¯\
+####`##`
+asciiend
+,ascii
+#####_
+###_íΩì_
+###/`î´\
+####\¯ì
+#####`#`
+asciiend
+,ascii
+#####_
+###_íΩì_
+###/`î´\
+####,\
+####`#`
+asciiend
+,ascii
+#####_
+###_íΩì_
+###/`î´\
+####7¯\
+####`##`
+asciiend］
+
+var OMWalkCount = OM.Count()
+var OMdiffposit
+OMdiffposit = pos.x + pos.y + pos.z
+OMwlk = (OMdiffposit/3) % OMWalkCount
+?OMwlk < 0
+  OMwlk = OMwlk + OMWalkCount
+>h-5,-0,#white,@OM［OMwlk］@
