@@ -89,3 +89,70 @@ asciiend
 ####',´
 ####`#`
 asciiend］
+
+/////////////
+var Wlk = 0
+var Helmet = ［ascii
+####@_
+###@íΩ`,
+###=´I`=
+###/｝¥｛`-,
+##″`/^\
+####/#|
+####`#`
+asciiend
+,ascii
+####@_
+###@íΩ`,
+###=´I`=
+###/｝¥｛`-,
+##″`/^\
+###,′##\
+###`####`
+asciiend
+,ascii
+####@_
+###@íΩ`,
+###=´I`=
+###/｝¥｛`-,
+##″`|^\
+####/##|
+####`###`
+asciiend
+,ascii
+####@_
+###@íΩ`,
+###=´I`=
+###/｝¥｛`-,
+##″`/^\
+####;#|
+####`#`
+asciiend
+,ascii
+####@_
+###@íΩ`,
+###=´I`=
+###/｝¥｛`-,
+##″`|^\
+####\#|
+ ####``
+asciiend
+,ascii
+####@_
+###@íΩ`,
+###=´I`=
+###/｝¥｛`-,
+##″`\^\
+####,\´
+####`#`
+asciiend］
+
+disable player
+var WalkCount = Helmet.Count()
+var diffposit
+diffposit = pos.x + pos.y + pos.z
+Wlk = (diffposit/3) % WalkCount
+?Wlk < 0
+  Wlk = Wlk + WalkCount
+
+>o-7,-1,#white,@Helmet ［Wlk］@
