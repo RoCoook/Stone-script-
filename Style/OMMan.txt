@@ -1,0 +1,176 @@
+
+
+enable player
+var Ofire = ascii
+#####_
+####íΩì_
+####`î´\
+asciiend
+?item.left = fire_talisman
+  >o-5,-0,#white,@Ofire@
+:
+  ?time > 200
+    disable player 
+
+
+var Torso = ascii
+#####_
+###_íΩì_
+###/`î´\
+asciiend
+?ai.idle | ai.paused | ai.walking
+^&item.left ! fire_talisman
+  >o-5,-0,#white,@Torso@
+
+var Itorso = ascii
+#####
+###
+######└#,
+asciiend
+
+
+var Oshield = ascii
+‹^›
+)Φ(
+`-´
+asciiend
+?item.right = compound shield
+  >o-5,-0,#white,@Itorso@
+  >o+2,+1,#red,@Oshield@
+
+var Odshield = ascii
+__
+ЖЖ
+`´
+asciiend
+?item.right = bashing shield
+^|item.right = dashing shield
+  >o-5,-0,#white,@Itorso@
+  >o+2,+1,#red,@Odshield@
+
+
+var Obow = ascii
+##_
+⌐╤╧#｝=
+asciiend
+var Obhand = ascii
+└####;
+asciiend
+?item.right = repeating crossbow
+  >o-0,+1,#red,@Obow@
+  >o-2,+2,#white,@Obhand@
+
+var AttackFrame = 0
+var AttackCount = 0
+var Osword = ［ascii
+#
+#####╖
+#####║
+#####║
+####¬╬⌐
+#####º
+asciiend
+,ascii
+#へ#
+#›\##
+##‹\####
+###›‹´#
+##´#7#
+#####º#
+asciiend
+,ascii
+#へ
+#›\##
+##‹\####
+###›‹´#
+##´#7#
+#####º#
+asciiend
+,ascii
+#
+#####
+╒════╪☺#
+#########
+asciiend
+,ascii
+\###¯\`,_
+###\##｝##\`_
+######\#\###`
+#########\#,´
+####☺╪════╛
+#####
+asciiend
+,ascii
+#
+###
+#####
+########
+####☺╪════╛
+#####
+asciiend］
+
+?!ai.paused 
+^& ai.enabled & foe.distance < 10
+  AttackCount++
+:
+  AttackCount = 0
+AttackFrame = (AttackCount*2/5) % 
+^Osword.Count()
+
+?item.right = heavy hammer 
+^|item.right = skeleton arm
+  >o-5,-0,#white,@Itorso@
+  >o-2,-2,#red,@Osword［AttackFrame］@
+
+var OMwlk = 0
+var OM = ［ascii
+####|¯
+####`#
+asciiend
+,ascii
+###,/¯
+#######
+asciiend
+,ascii
+####\¯
+####`#
+asciiend
+,ascii
+#####\
+######`
+asciiend］
+
+var OMWalkCount = OM.Count()
+var OMdiffposit
+OMdiffposit = pos.x + pos.y + pos.z
+OMwlk = (OMdiffposit/3) % OMWalkCount
+?OMwlk < 0
+  OMwlk = OMwlk + OMWalkCount
+>o-5,+3,#white,@OM［OMwlk］@
+
+
+var OGwlk = 0
+var OG = ［ascii
+######/
+######`
+asciiend
+,ascii
+######\
+#######`
+asciiend
+,ascii
+######|
+######`
+asciiend
+,ascii
+####,#´
+####`
+asciiend］
+
+var OGWalkCount = OG.Count()
+var OGdiffposit
+OGdiffposit = pos.x + pos.y + pos.z
+OGwlk = (OGdiffposit/3) % OGWalkCount
+?OGwlk < 0
+  OGwlk = OGwlk + OGWalkCount
+>o-5,+3,#6B6B6B,@OG［OGwlk］@
