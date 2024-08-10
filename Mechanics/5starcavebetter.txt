@@ -1,0 +1,101 @@
+>`0,0, Current time = @totaltime / 30@ 
+>`0,7, Foe distance = @foe.distance@
+
+
+func isEquippedTwoHanded()
+  return !item.left
+
+func CheckForAAC()
+  ?!ai.enabled
+    return
+
+  var isTwoHanded = isEquippedTwoHanded()
+  var leftItem = item.left
+  var rightItem = item.right
+
+  ?item.left.state = 3
+    equipL moon
+  ?item.right.state = 3
+    equipR triskelion 
+
+  ?isTwoHanded
+    ?rightItem
+      equip @rightItem@
+    :?leftItem
+      equip @leftItem@
+  :
+    ?rightItem
+      equipR @rightItem@
+    ?leftItem
+      equipL @leftItem@   
+
+CheckForAAC()
+
+?loc = caves & loc.stars = 5
+  ?item.GetCooldown(＂quarterstaff＂) <= 0
+  ^&time > 1 & foe.distance > 5
+    ?item.CanActivate(＂potion＂)
+      activate potion 
+    :
+      equip Dasher +16 *1
+      activate R
+  : 
+    >`0,22, DCL = 
+    ^@item.GetCooldown(＂quarterstaff＂)/30@
+
+  ?foe.distance < 34
+    var frame = 0
+    var cdb = 0
+    cdb = item.GetCooldown(＂blade＂)
+    ? cdb <= 0 & frame <= 0
+      frame = 1
+      screen.Next()
+    : ? frame > 0
+      frame++
+      ? frame >= 19
+        frame = 0
+        equip Blade  // *9 +5 smite
+        activate R
+        screen.ResetOffset()
+      return 
+      
+  ?foe.distance < 13
+    equip Heavy Hammer *01 +01
+  :
+    ?item.GetCooldown(＂bash＂) <= 0
+      equiPR bashing shield 
+      equipL triskelion 
+    :
+      equipR dashing shield *0 +0
+      equipL triskelion
+
+  /*?foe.distance < 10
+    equipR dashing shield *0 +0
+    equipL crossbow *6 +2
+  :
+    ?item.GetCooldown(＂bash＂) <= 0
+      equiPR bashing shield 
+      equipL triskelion 
+    :
+      equipR dashing shield *0 +0
+      equipL triskelion */
+
+  ?pickup.distance < 10
+    equipR star
+    equipL triskelion 
+  ?pickup.distance < 35
+    ?item.CanActivate()
+      var zrame = 0
+      var zdb = 0
+      zdb = item.GetCooldown(＂mask＂)
+      ? zdb <= 0 & zrame <= 0
+        zrame = 1
+        screen.Next()
+      : ? zrame > 0
+        zrame++
+        ? zrame >= 25
+          zrame = 0
+          equip mask 
+          activate R
+          screen.ResetOffset()
+        return 
