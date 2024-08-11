@@ -1,0 +1,107 @@
+>`0,0, Current time = @totaltime / 30@ 
+>`0,2, Current time = @totaltime@ 
+>`0,7, Foe distance = @foe.distance@
+
+
+func isEquippedTwoHanded()
+  return !item.left
+
+func CheckForAAC()
+  ?!ai.enabled
+    return
+
+  var isTwoHanded = isEquippedTwoHanded()
+  var leftItem = item.left
+  var rightItem = item.right
+
+  ?item.left.state = 3
+    equipL star
+  ?item.right.state = 3
+    equipR triskelion 
+
+  ?isTwoHanded
+    ?rightItem
+      equip @rightItem@
+    :?leftItem
+      equip @leftItem@
+  :
+    ?rightItem
+      equipR @rightItem@
+    ?leftItem
+      equipL @leftItem@   
+
+CheckForAAC()
+
+?loc = wood & loc.stars = 5
+  ?item.GetCooldown(＂quarterstaff＂) <= 0
+  ^&time > 1 & foe.distance > 5
+    equip Dasher +20 *1
+    activate R
+  : 
+    >`0,22, DCL = 
+    ^@item.GetCooldown(＂quarterstaff＂)@
+
+  ?foe.distance < 25
+    var frame = 0
+    var cdb = 0
+    cdb = item.GetCooldown(＂blade＂)
+    ? cdb <= 0 & frame <= 0
+      frame = 1
+      screen.Next()
+    : ? frame > 0
+      frame++
+      ? frame >= 15
+        frame = 0
+        equip Blade  // *9 +5 smite
+        activate R
+        screen.ResetOffset()
+      return 
+  
+  ?foe.name = scarab
+    ?foe.distance < 5 & foe.count > 5
+      activate potion
+    /*  equipR axe *0 +7
+      equipL triskelion
+    ?foe.distance > 5 
+      equipR dashing *0 +0
+      equipL triskelion */
+            
+
+  ?foe.distance < 5 & totaltime > 200
+    equip repeating crossbow *3 +4
+  :
+  /*  ?item.GetCooldown(＂bash＂) <= 0
+      equiPR bashing shield 
+      equipL triskelion 
+    :
+      equipR dashing shield *0 +0
+      equipL triskelion*/
+    equipR dashing shield *0 +0
+    equipL triskelion 
+
+  
+  ?pickup.distance < 10
+    equipR star
+    equipL triskelion 
+  
+  ?totaltime > 400 & foe.distance < 1000
+   ?item.CanActivate()
+      var zrame = 0
+      var zdb = 0
+      zdb = item.GetCooldown(＂mask＂)
+      ? zdb <= 0 & zrame <= 0
+        zrame = 1
+        screen.Next()
+      : ? zrame > 0
+        zrame++
+        ? zrame >= 14
+          zrame = 0
+          equip mask 
+          activate R
+          screen.ResetOffset()
+        return
+
+var Head = ascii
+╘曲╛
+asciiend
+>h-1,+1,#white,@Head@
