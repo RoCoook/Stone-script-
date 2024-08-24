@@ -1,0 +1,121 @@
+////// AAC CANCEL //////
+func isEquippedTwoHanded()
+  return !item.left
+
+func CheckForAAC()
+  ?!ai.enabled
+    return
+
+  var isTwoHanded = isEquippedTwoHanded()
+  var leftItem = item.left
+  var rightItem = item.right
+
+  ?item.right.state = 3
+    equipR *0 shield
+  ?item.left.state = 3
+    equipL *0 wand
+
+  ?isTwoHanded
+    ?rightItem
+      equip @rightItem@
+    :?leftItem
+      equip @leftItem@
+  :
+    ?rightItem
+      equipR @rightItem@
+    ?leftItem
+      equipL @leftItem@   
+CheckForAAC()
+
+>`0,0,Time = @totaltime / 3@
+>`0,6, Dash = 
+^@item.GetCooldown(＂quarterstaff＂)/3@
+>`0,7, Blade = 
+^@item.GetCooldown(＂blade＂)/3@
+>`0,8, Mask = 
+^@item.GetCooldown(＂mask＂)/3@
+>`0,9, Shield = 
+^@item.GetCooldown(＂dash＂)/3@
+>`0,21, Foe distance = @foe.distance@
+>`0,22, X = @pos.x@
+>`0,23, Z = @pos.z@
+
+?loc = cave
+  ?summon.count = 0
+    equipL fire talisman
+    equipR compound shield 
+    ?time > 1
+      equipR triskelion 
+    ?item.CanActivate(＂fire_talisman＂)
+      activate L
+
+  ?item.GetCooldown(＂quarterstaff＂) <= 0
+  ^&time > 1 &foe ! boss
+      equip dasher +21
+      activate R
+      ?item.CanActivate(＂quarterstaff＂)
+        activate R
+      :
+        equipR compound shield 
+        equipL triskelion 
+
+  ?item.GetCooldown("blade") <= 0
+    ?foe.distance < 5
+      var frame = 0
+      var cdb = 0
+      cdb = item.GetCooldown(＂blade＂)
+      ? cdb <= 0 & frame <= 0
+        frame = 1
+        screen.Next()
+      : ? frame > 0
+          frame++
+        ? frame >= 15
+          frame = 0
+          equip Blade
+          activate R
+          screen.ResetOffset()
+        return
+      ?foe.count > 0 & foe.distance < 20
+^&foe ! boss 
+        ?item.GetCooldown(＂bash＂) <= 0 
+          equipR bashing shield 
+          equipL triskelion 
+        :
+          ?item.GetCooldown(＂dash＂) <= 0
+            equipR dashing shield 
+            equipL triskelion
+          :
+            equip stone crossbow +21
+        ?foe.distance < 13
+          equip stone crossbow +21
+      :
+        equipR compound shield 
+        equipL triskelion 
+
+  ?foe = ceiling decorator
+    ?foe.distance < 15
+      ?item.GetCooldown(＂bash＂) <= 0 
+        equipR bashing shield 
+        equipL triskelion 
+      :
+        ?item.GetCooldown(＂dash＂) <= 0
+          equipR dashing shield 
+          equipL triskelion
+        :
+          equip ice crossbow +21
+    ?foe.distance < 12
+      ?item.GetCooldown(＂hammer＂) <= 0
+        equip hammer +11
+        activate R  
+      :
+        equip stone crossbow +21
+  :
+    ?foe = boss
+      ?ai.enabled
+        activate potion
+        equip ice crossbow +21
+
+var Head = ascii
+╘曲╛
+asciiend
+>h-1,+1,#white,@Head@and
