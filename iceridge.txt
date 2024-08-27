@@ -43,10 +43,10 @@ CheckForAAC()
 >`0,11, Hammer = 
 ^@item.GetCooldown(＂hammer＂)/3@
 
->`0,21, X = @pos.x@
->`0,22, Z = @pos.z@
->`0,24, Foe distance = @foe.distance@
->`0,25, Foe = @foe.name@:
+>`0,20, X = @pos.x@
+>`0,21, Z = @pos.z@
+>`0,23, Foe distance = @foe.distance@
+>`0,24, Foe = @foe.name@:
 ^ S:@foe.state@ T:@foe.time/3@
 
 
@@ -117,8 +117,9 @@ func SwordAttk()
 
 
 ///// MINIONS //////
-?foe ! hrímnir  
-  ?foe.count > 0 & foe.distance > 20
+?foe ! hrímnir &
+^item.GetCooldown(＂quarterstaff＂) > 0
+  ?foe.count > 0 & foe.distance < 20
     ?foe.distance > 13
       ShieldDash()
     :
