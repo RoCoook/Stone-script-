@@ -43,11 +43,12 @@ CheckForAAC()
 >`0,11, Hammer = 
 ^@item.GetCooldown(＂hammer＂)/3@
 
->`0,26, Foe = @foe.name@:
+>`0,21, X = @pos.x@
+>`0,22, Z = @pos.z@
+>`0,24, Foe distance = @foe.distance@
+>`0,25, Foe = @foe.name@:
 ^ S:@foe.state@ T:@foe.time/3@
->`0,25, Foe distance = @foe.distance@
->`0,22, X = @pos.x@
->`0,23, Z = @pos.z@
+
 
 var Head = ascii
 ╘曲╛
@@ -74,23 +75,24 @@ asciiend
         return
 
 ////// START //////
-?summon.count = 0
-  equipL fire talisman
-  equipR compound shield 
-  ?time > 1
-    equipR triskelion 
-  ?item.CanActivate(＂fire_talisman＂)
-    activate L
-:
-  ?item.GetCooldown(＂quarterstaff＂) <= 0
-  ^&time > 1
-    equip dasher +11
-    activate R
-    ?item.CanActivate(＂quarterstaff＂)
+?ai.enabled
+  ?summon.count = 0
+    equipL fire talisman
+    equipR compound shield 
+    ?time > 1
+      equipR triskelion 
+    ?item.CanActivate(＂fire_talisman＂)
+      activate L
+  :
+    ?item.GetCooldown(＂quarterstaff＂) <= 0
+    ^&time > 1
+      equip dasher +11
       activate R
-    :
-      equipR compound shield 
-      equipL triskelion
+      ?item.CanActivate(＂quarterstaff＂)
+        activate R
+      :
+        equipR compound shield 
+        equipL triskelion
 
 
 ////// FUNC //////
