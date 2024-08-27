@@ -150,10 +150,15 @@ func SwordAttk()
     activate potion
 
   ?foe.armor > 0
-    ?foe.distance > 13
+    ?foe.distance > 7
       ShieldDash()
-    equipR aether sword +11
-    equipL aether sword +10
+    :
+      ?item.GetCooldown(＂hammer＂) <= 0
+        equip hammer
+        activate R
+      :
+        equipR aether sword +11
+        equipL aether sword +10
 
   ?foe.state = 32 | 
   ^foe.state = 33
@@ -170,16 +175,17 @@ func SwordAttk()
 
   ?foe.state = 132 |
   ^foe.state = 133
-    ?item.GetCooldown(＂mask＂) <= 0
-      equip mask
-      activate R
     ?foe.distance > 13
       ShieldDash()
     :
-      ?foe.distance <= 5
+      ?foe.distance <= 6
         SwordAttk()
       :
         equip fire crossbow +21
+    ?item.GetCooldown(＂mask＂) <= 0
+      equip mask
+      activate R
+
 
 ?foe = ice wall
   equipR aether sword +11
