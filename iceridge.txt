@@ -123,7 +123,7 @@ func SwordAttk()
     ?foe.distance > 13
       ShieldDash()
     :
-      ?foe = ice pillar 
+      ?foe = ice pillar
       ^& foe.hp >= foe.maxhp % 2
         equipR aether sword +11
         equipL aether sword +10
@@ -150,6 +150,8 @@ func SwordAttk()
     activate potion
 
   ?foe.armor > 0
+    ?foe.distance > 13
+      ShieldDash()
     equipR aether sword +11
     equipL aether sword +10
 
