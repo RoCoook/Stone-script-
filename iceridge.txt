@@ -58,21 +58,21 @@ asciiend
 
 ////// BOFG START //////
 ?item.CanActivate()
-    ?foe.distance < 5
-      var frame = 0
-      var cdb = 0
-      cdb = item.GetCooldown(＂blade＂)
-      ? cdb <= 0 & frame <= 0
-        frame = 1
-        screen.Next()
-      : ? frame > 0
-          frame++
-        ? frame >= 15
-          frame = 0
-          equip Blade
-          activate R
-          screen.ResetOffset()
-        return
+  ?foe.distance < 5
+    var frame = 0
+    var cdb = 0
+    cdb = item.GetCooldown(＂blade＂)
+    ? cdb <= 0 & frame <= 0
+      frame = 1
+      screen.Next()
+    : ? frame > 0
+        frame++
+      ? frame >= 15
+        frame = 0
+        equip Blade
+        activate R
+        screen.ResetOffset()
+      return
 
 ////// START //////
 ?ai.enabled
@@ -124,9 +124,9 @@ func SwordAttk()
       ShieldDash()
     :
       ?foe = ice pillar
-      ^& foe.hp >= foe.maxhp % 2
-        equipR aether sword +11
-        equipL aether sword +10
+        ?foe.distance < 7
+          equipR aether sword +11
+          equipL aether sword +10 
       :
         equip stone crossbow +21      
   :
@@ -159,6 +159,7 @@ func SwordAttk()
       :
         equipR aether sword +11
         equipL aether sword +10
+  :
 
   ?foe.state = 32 | 
   ^foe.state = 33
