@@ -1,0 +1,212 @@
+////// AAC CANCEL //////
+func isEquippedTwoHanded()
+  return !item.left
+
+func CheckForAAC()
+  ?!ai.enabled
+    return
+
+  var isTwoHanded = isEquippedTwoHanded()
+  var leftItem = item.left
+  var rightItem = item.right
+
+  ?item.right.state = 3
+    equipR *0 shield
+  ?item.left.state = 3
+    equipL *0 wand
+
+  ?isTwoHanded
+    ?rightItem
+      equip @rightItem@
+    :?leftItem
+      equip @leftItem@
+  :
+    ?rightItem
+      equipR @rightItem@
+    ?leftItem
+      equipL @leftItem@   
+CheckForAAC()
+
+
+////// INFO //////
+
+>`0,0,Time = @totaltime / 3@
+>`0,6, Dash = 
+^@item.GetCooldown(＂quarterstaff＂)/3@
+>`0,7, Blade = 
+^@item.GetCooldown(＂blade＂)/3@
+>`0,8, Mask = 
+^@item.GetCooldown(＂mask＂)/3@
+>`0,9, BShield = 
+^@item.GetCooldown(＂bash＂)/3@
+>`0,10, DShield = 
+^@item.GetCooldown(＂dash＂)/3@
+>`0,11, Hammer = 
+^@item.GetCooldown(＂hammer＂)/3@
+
+>`0,20, X = @pos.x@
+>`0,21, Z = @pos.z@
+>`0,23, Foe distance = @foe.distance@
+>`0,24, Foe = @foe.name@:
+^ S:@foe.state@ T:@foe.time/3@
+
+
+var Head = ascii
+╘曲╛
+asciiend
+>h-1,+1,#white,@Head@
+
+
+////// BOFG START //////
+?item.CanActivate()
+    ?foe.distance < 5
+      var frame = 0
+      var cdb = 0
+      cdb = item.GetCooldown(＂blade＂)
+      ? cdb <= 0 & frame <= 0
+        frame = 1
+        screen.Next()
+      : ? frame > 0
+          frame++
+        ? frame >= 15
+          frame = 0
+          equip Blade
+          activate R
+          screen.ResetOffset()
+        return
+
+////// START //////
+?ai.enabled
+  ?summon.count = 0
+    equipL fire talisman
+    equipR compound shield 
+    ?time > 1
+      equipR triskelion 
+    ?item.CanActivate(＂fire_talisman＂)
+      activate L
+  :
+    ?item.GetCooldown(＂quarterstaff＂) <= 0
+    ^&time > 1
+      equip dasher +11
+      activate R
+      ?item.CanActivate(＂quarterstaff＂)
+        activate R
+      :
+        equipR compound shield 
+        equipL triskelion
+
+
+////// FUNC //////
+func ShieldDash()     
+  ?item.GetCooldown(＂bash＂) <= 0 
+    equipR bashing shield 
+    equipL triskelion 
+  :
+    ?item.GetCooldown(＂dash＂) <= 0
+      equipR dashing shield 
+      equipL triskelion
+    :
+      equip stone crossbow +21
+
+func SwordAttk()
+  ?hp < maxhp
+    equipR fire sword +21
+    equipL vigor sword +11
+  :
+    equipR fire sword +21
+    equipL moon
+
+
+///// MINIONS //////
+?foe ! hrímnir &
+^item.GetCooldown(＂quarterstaff＂) > 0
+  ?foe.count > 0 & foe.distance < 20
+    ?foe.distance > 13
+      ShieldDash()
+    :
+      ?foe = ice pillar
+      ^& foe.hp >= foe.maxhp % 2
+        equipR aether sword +11
+        equipL aether sword *9 +11
+
+      :?foe = giant ice elemental
+      ^& foe.distance < 13
+        equip fire crossbow +21
+      :
+        equip stone crossbow +21      
+  :
+    ?foe.distance < 25
+      equipR fire shield 
+      equipL triskelion 
+    :
+      equipR compound shield 
+      equipL triskelion 
+
+
+
+
+////// BOSS //////
+?foe = boss 
+  var p = 1
+  ?p = 1
+    >`15,0, BOSS
+
+?foe = giant ice elemental
+^& foe.distance < 11
+  equip fire crossbow +21
+
+?foe = hrímnir
+  >`15,1, FIGHT 
+
+  ?foe.state = 1
+    activate cinderwisp
+    ?item.GetCooldown(＂cinderwisp＂) <= 0
+      equip fire crossbow +21
+
+  ?foe.state = 132
+    equip fire crossbow +21
+    activate potion
+     
+  ?foe.armor > 0
+    ?foe.distance > 13
+      ?item.GetCooldown(＂quarterstaff＂) <= 0
+        equip dasher +11
+        activate R
+        ?item.CanActivate(＂quarterstaff＂)
+          activate R
+      :
+        ShieldDash()
+    :
+      equip fire crossbow +21
+    
+  ?foe.state = 32 | 
+  ^foe.state = 33
+    ?item.GetCooldown(＂quarterstaff＂) <= 0
+      equip dasher +11
+      activate R
+      ?item.CanActivate(＂quarterstaff＂)
+        activate R
+    :
+      ?foe.distance > 13
+        ShieldDash()
+      :
+        ?foe.distance > 2
+          equip shovel
+        :
+          SwordAttk()
+
+  ?foe.state = 132 |
+  ^foe.state = 133
+    ?foe.distance > 13
+      ShieldDash()
+    :
+      equip fire crossbow +21 
+
+?foe = ice wall
+  equipR aether sword +11
+  equipL aether sword *9 +11
+
+
+
+          
+  
