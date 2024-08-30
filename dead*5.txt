@@ -1,0 +1,130 @@
+////// AAC CANCEL //////
+func isEquippedTwoHanded()
+  return !item.left
+
+func CheckForAAC()
+  ?!ai.enabled
+    return
+
+  var isTwoHanded = isEquippedTwoHanded()
+  var leftItem = item.left
+  var rightItem = item.right
+
+  ?item.right.state = 3
+    equipR *0 triskelion 
+  ?item.left.state = 3
+    equipL star
+
+  ?isTwoHanded
+    ?rightItem
+      equip @rightItem@
+    :?leftItem
+      equip @leftItem@
+  :
+    ?rightItem
+      equipR @rightItem@
+    ?leftItem
+      equipL @leftItem@   
+CheckForAAC()
+
+
+////// INFO //////
+
+>`0,0,Time = @totaltime / 3@
+>`15,0,Frame = @totaltime@
+>`0,6, Dash = 
+^@item.GetCooldown(＂quarterstaff＂)/3@
+>`0,7, Blade = 
+^@item.GetCooldown(＂blade＂)/3@
+>`0,8, Mask = 
+^@item.GetCooldown(＂mask＂)/3@
+>`0,9, BShield = 
+^@item.GetCooldown(＂bash＂)/3@
+>`0,10, DShield = 
+^@item.GetCooldown(＂dash＂)/3@
+>`0,11, Hammer = 
+^@item.GetCooldown(＂hammer＂)/3@
+
+>`0,20, X = @pos.x@
+>`0,21, Z = @pos.z@
+>`0,23, Foe distance = @foe.distance@
+>`0,24, Foe = @foe.name@:
+^ S:@foe.state@ T:@foe.time/3@
+
+
+var Head = ascii
+╘曲╛
+asciiend
+>h-1,+1,#white,@Head@
+
+?loc = wood & loc.stars = 5
+  ?item.GetCooldown(＂quarterstaff＂) <= 0
+  ^&time > 1 & foe.distance > 15
+    equip quarter staff *1 +17
+    activate R
+  : 
+    >`0,22, DCL = 
+    ^@item.GetCooldown(＂quarterstaff＂)@
+   
+  ?foe.distance < 25
+  ^&item.GetCooldown(＂blade＂) <= 0
+    var frame = 0
+    var cdb = 0
+    cdb = item.GetCooldown(＂blade＂)
+    ? cdb <= 0 & frame <= 0
+      frame = 1
+      screen.Next()
+    : ? frame > 0
+      frame++
+      ? frame >= 15
+        frame = 0
+        equip Blade  // *9 +5 smite
+        activate R
+        screen.ResetOffset()
+      return
+  
+  ?foe.name = scarab 
+    ?foe.distance < 50
+      ?item.GetCooldown(＂bash＂) <= 0 
+        equipR bashing shield 
+        equipL triskelion  
+      :  
+        equipR dash *0 +0
+        equipL triskelion 
+        ?item.GetCooldown(＂dash＂) > 0 
+          activate potion   
+
+        /*equipL grappling hook
+        ?foe.distance < 12
+          equipR triskelion 
+        :  
+          equipR dash *0 +0
+          ?item.GetCooldown(＂dash＂) > 0 
+            activate potion   */
+  :
+    ?foe.distance < 5 & totaltime > 200
+      equip repeating crossbow *7 +0
+    :
+      equipR dash *0 +0
+      equipL triskelion 
+  
+  ?pickup.distance < 10
+    equipR star
+    equipL triskelion 
+  
+  ?pos.x > 227
+    ?item.CanActivate()
+      var zrame = 0
+      var zdb = 0
+      zdb = item.GetCooldown(＂mask＂)
+      ? zdb <= 0 & zrame <= 0
+        zrame = 1
+        screen.Next()
+      : ? zrame > 0
+        zrame++
+        ? zrame >= 13
+          zrame = 0
+          equip mask 
+          activate R
+          screen.ResetOffset()
+        return
