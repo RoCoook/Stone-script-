@@ -139,4 +139,4 @@ var Heaven = ascii
                                                                                                                                                                                                                                                                         
                                                                                                                                                                                                                                                                         
 asciiend 
->O`0,0,#white,@Heaven@    
+>o 0,0,#white,@Heaven@    
