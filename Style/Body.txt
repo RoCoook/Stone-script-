@@ -1,0 +1,191 @@
+var Head = ascii
+╘曲╛
+asciiend
+>h-1,+1,#6B0000,@Head@
+
+var Body = ascii
+´Ж`
+asciiend
+>h-1,+2,#6B0000,@Body@
+
+var leg= ascii
+          
+         
+asciiend
+>h-1,+3,#6B0000,@leg@
+
+
+var OMwlk = 0
+var OM = ［ascii
+#####|
+#####`
+asciiend
+,ascii
+####ノ
+####`
+asciiend
+,ascii
+###,/
+####
+asciiend
+,ascii
+####´,
+####`
+asciiend
+,ascii
+#####\
+#####`
+asciiend
+,ascii
+######\
+######`
+asciiend
+,ascii
+######\
+#######`
+asciiend
+,ascii
+######\
+######`
+asciiend］
+
+var OMWalkCount = OM.Count()
+var OMdiffposit
+OMdiffposit = pos.x + pos.y + pos.z
+OMwlk = (OMdiffposit/3) % OMWalkCount
+?OMwlk < 0
+  OMwlk = OMwlk + OMWalkCount
+>h-5,+3,#6B0000,@OM［OMwlk］@
+
+
+var OGwlk = 0
+var OG = ［ascii
+######›
+######`
+asciiend
+,ascii
+######>
+######`
+asciiend
+,ascii
+######\
+######`
+asciiend
+,ascii
+######\
+#######`
+asciiend
+,ascii
+#######\
+#######`
+asciiend
+,ascii
+######>
+######`
+asciiend
+,ascii
+#####›
+#####`
+asciiend
+,ascii
+####,
+####`
+asciiend］
+
+
+var OGWalkCount = OG.Count()
+var OGdiffposit
+OGdiffposit = pos.x + pos.y + pos.z
+OGwlk = (OGdiffposit/3) % OGWalkCount
+?OGwlk < 0
+  OGwlk = OGwlk + OGWalkCount
+>h-5,+3,#3A0000,@OG［OGwlk］@
+
+/*
+且 中 丰 |│ Ж ║
+A B C D E F G H 
+I J K L M N O P Q 
+R S T U V W X Y Z
+
+a b c d e f g h 
+i k l m n o p q
+r s t u v w x y z
+
+À Á  Â Ã Ä Å Æ
+Ç È É Ê Ë Ì Í Î Ï Ð Ñ Ò
+Ó Ô Õ Ö × Ø Ù 
+Ú Û Ü Ý Œ 
+
+þ ß à á 
+â ã ä å æ ç è é 
+ê ë ì í î ï ð ñ 
+ò ó ô õ ö ÷ ø ù 
+ú û ü ý þ ÿ ğ Ğ
+i ı ň œ ş ş ə
+ƒ ə œ
+
+ʘ Δ Θ Σ Φ Ω
+έ α β γ δ ε ζ η 
+θ ι λ μ ξ π ρ σ 
+τ φ ψ ω 
+
+Ё А Б В Г
+Д Е Ж З И Й К Л 
+М Н О П Р С Т У 
+Ф Х Ц Ч Ш Щ Ъ Ы 
+Ь Э Ю Я а б в г 
+д е ж з и й к л 
+м н о п р с т у 
+ф х ц ч ш щ ъ ы 
+ь э ю я ё
+
+₠ ₡ ₢ ₣ ₤
+₥ ₦ ₧ ₨ ₩ ₪ ₫ €
+₭ ₮ ₯ ₰ ₱ ₲ ₳ ₴
+₵ ₶ ₷ ₸ ¥
+€ £ ￥ $ İ ₹ ₺ ₻
+₼ ₽ ₾
+
+1 2 3 4 5 6 7 8 9 
+¹ ² ³ ½ ¼ ¾
+% ‰
+
+! ¡ ? ¿  :  ; @ $ *
+ノ ⁄ / \ 丶 ［ ］ ｛ ｝ ( ) 
+` ´ ' ＂ ‛ '  ‟ ″ ′ 
+< > ‹ › ≤ ≥ « » 《  》 く へ 人 ^ フ レ
+_ ‗ - – ー — = ≡ ≠ ≈ ~ ～ ¯
+┊ ⁞ ı | │ ¦ † ‡
+⁪  ⁫  ⁬  ⁭  ⁮ ⁯
+.. … · • • ° º . ¨ ¤
+, ¸ „ 、
+÷ + ±
+™ ® ª © § ¶
+
+← ↑ → ↓ 
+「 」『 』
+⌐ ¬ ┌ ┐ └ ┘ 
+├ ┤  ┬  ┴ ┼ ═
+╒ ╓ ╔ ╕ ╖ ╗ ╘ ╙
+╚ ╛ ╜ ╝ ╞ ╟ ╠ ╡
+╢ ╣ ╤ ╥ ╦ ╧ ╨ ╩ ║ ‖
+╪ ╫ ╬ ▀ ▄ █ ░ ▒ ▓
+▲ ▶ ▼ ◀ ○ ◘ ◙ 
+
+☤ ☹ ☺ ☼ ♀ ♂ ♠
+♣ ♥ ♦ ♪ ♫ ⚿
+❄ ☆ ◘ ⏹ 
+
+自 里 非 曾 雷 王 三 噩 黑 金 罪 面 央 甲 由 目 且 中 丰 壺 具 員 
+益 霊 半 固 軍 平 異 基 嵐 菓 未 米 曲 釜 貢 崖 叩 薬 晶 車 英 互
+苦 炎 辛 習 甘 貫 典 罪 旦 ェ ロ 으 주 스 있 모 소 보 무 모 요 부
+효 후 흐 웃 유 솟 용 품 응 끄 풍 뾰 프 몸 줍 초 훔 붕 띠 뜨 승 므
+뭉 표 붓 픔 브 휴 뮤 씁 웅 쪼 엎 쯤 꿈 뜬 
+る っ 田 巨 山 ェ ロ 置 点 や 品 二 買 匠
+多 了 
+ソ 厂 ヨ 山 又 义 日 火 冊 圖 乃 華 車 口 井
+亞 丘 丑 臣 菲 业 耳 呈 垂 串 舍
+ ス ト  ョ ッ プ ン ぃ 回 万 穴 ぷ
+り ふ ざ 刀 爪 亚 盖 耳
+や タ 灰 メ 衣 长
+*/
