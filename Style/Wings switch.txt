@@ -1,0 +1,36 @@
+var P = 0
+func OnPress()
+  ?P = 0
+    P = 1
+    >Off
+  :?P = 1
+    P = 0
+    >On
+
+var button = ui.AddButton()
+button.x=5
+button.y=7
+button.w=8
+button.h=3
+button.text=＂SWITCH＂
+button.dock=top_left
+button.SetPressed(OnPress)
+
+?P = 0
+  >h-6,+0,#940000,@DW@
+:
+  >h-7,-1,#yellow,@AW@
+
+
+var DW = ascii
+###人#####人
+##)`\└#┘/´(
+##v^´###`^v
+asciiend
+
+var AW = ascii
+###(\#####/)
+##(##(#_#)##)
+###(#´###`#)
+####＂～###～＂
+asciiend
