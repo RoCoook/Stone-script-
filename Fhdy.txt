@@ -1,0 +1,202 @@
+////// AAC CANCEL //////
+func isEquippedTwoHanded()
+  return !item.left
+
+func CheckForAAC()
+  ?!ai.enabled
+    return
+
+  var isTwoHanded = isEquippedTwoHanded()
+  var leftItem = item.left
+  var rightItem = item.right
+
+  ?item.right.state = 3
+    equipR *0 shield
+  ?item.left.state = 3
+    equipL *0 wand
+
+  ?isTwoHanded
+    ?rightItem
+      equip @rightItem@
+    :?leftItem
+      equip @leftItem@
+  :
+    ?rightItem
+      equipR @rightItem@
+    ?leftItem
+      equipL @leftItem@   
+CheckForAAC()
+
+
+////// INFO //////
+
+>`0,0,Time = @totaltime / 3@, @totaltime@
+>`0,6, QDash = 
+^@item.GetCooldown(＂quarterstaff＂)/3@
+>`0,7, Blade = 
+^@item.GetCooldown(＂blade＂)/3@
+>`0,8, Mask = 
+^@item.GetCooldown(＂mask＂)/3@
+>`0,9, FireT = 
+^@item.GetCooldown(＂fire_talisman＂)/3@
+>`0,10, BShield = 
+^@item.GetCooldown(＂bash＂)/3@
+>`0,11, DShield = 
+^@item.GetCooldown(＂dash＂)/3@
+>`0,12, Hammer = 
+^@item.GetCooldown(＂hammer＂)/3@
+>`0,13, Bardiche = 
+^@item.GetCooldown(＂bardiche＂)/3@
+
+
+>`0,20, X = @pos.x@
+>`0,21, Z = @pos.z@
+>`0,23, Foe distance = @foe.distance@
+>`0,24, Foe = @foe.name@:
+^ S:@foe.state@ T:@foe.time/3@
+
+var Cos= ascii
+###人#ノ、
+##ノ#`╘曲╛
+#´^、,
+###´
+asciiend
+>h-6,+0,#rainbow,@Cos@
+
+
+////// BOFG START //////
+?item.CanActivate()
+^& pos.x > 10
+    ?foe.distance < 15
+      var frame = 0
+      var cdb = 0
+      cdb = item.GetCooldown(＂blade＂)
+      ? cdb <= 0 & frame <= 0
+        frame = 1
+        screen.Next()
+      : ? frame > 0
+          frame++
+        ? frame >= 13
+          frame = 0
+          equip Blade
+          activate R
+          screen.ResetOffset()
+        return
+
+////// START //////
+?ai.enabled & foe ! hrímnir
+  ?summon.count = 0
+    ?time < 2
+      equipL quest
+      equipR compound shield 
+    :
+      ?item.GetCooldown(＂quarterstaff＂) <= 0
+        equip dasher +21
+        activate R
+      :
+        equipL fire talisman
+        ?time > 1
+          equipR triskelion 
+          ?item.CanActivate(＂fire_talisman＂)
+            activate L
+  :
+    ?item.GetCooldown(＂quarterstaff＂) <= 0
+    ^& foe.distance > 5
+      equip dasher +21
+      activate R
+    
+
+////// FUNC //////
+func ShieldDash()     
+  ?item.GetCooldown(＂bash＂) <= 0 
+    equipR bashing shield 
+    equipL triskelion 
+  :
+    ?item.GetCooldown(＂dash＂) <= 0
+      equipR dashing shield 
+      equipL triskelion
+    :
+      equipR fire shield 
+      equipL triskelion
+
+func FireSword()
+  equipR Shishkebab
+  equipL fire sword
+
+func AetherSword()
+  equipR FatMan +21
+  equipL LittleBoy +18
+
+
+///// MINIONS //////
+?foe ! boss & time > 50
+  ?foe.distance <= 14
+    ?foe.distance >= 12  
+      ShieldDash()   
+    :
+      ?foe.distance > 10
+        equipR fire shield 
+        equipL triskelion 
+      :
+        ?foe.count > 3
+          AetherSword()
+        :
+          ?foe = ice pillar
+            AetherSword()
+          :
+            FireSword()
+        
+  :
+    equipR fire shield 
+    equipL triskelion
+
+?foe = ice pillar & foe.distance < 20
+  ?foe.hp < foe.maxhp
+    AetherSword()
+
+
+
+
+////// BOSS //////
+?foe = boss 
+  var p = 1
+  ?p = 1
+    >`15,0, BOSS
+
+?foe = giant ice elemental
+  ?foe.distance > 20
+    equipL triskelion 
+    ?armor <= 7
+      equipR dashing shield
+    :
+      equipR compound shield 
+  :
+    ?foe.distance < 16
+      ShieldDash()
+    ?foe.distance < 10
+      equip firecrossbow +21
+
+
+?foe = hrímnir
+  >`15,1, FIGHT 
+
+  ?foe.hp = foe.maxhp
+    ?item.GetCooldown(＂quarterstaff＂) <= 0
+      equip dasher +21
+      activate R
+
+  ?foe.state = 1
+    activate cinderwisp      
+
+  ?foe.state = 132
+    equip fire crossbow +21
+    activate potion
+     
+  ?foe.armor > 0
+    equip mask
+    ?item.CanActivate()
+      activate R
+
+
+          
+  
